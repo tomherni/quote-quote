@@ -10,6 +10,12 @@
  * convert(`"That's a 'magic' shoe."`); // “That’s a ‘magic’ shoe.”
  */
 export function convert(text: string): string {
+  // If a string was not provided then it should also not be returned, nor
+  // should the function fail silently.
+  if (typeof text !== 'string') {
+    throw new TypeError('quote-quote: "convert()" argument must be a string');
+  }
+
   return (
     text
       // Quadruple and triple prime.
