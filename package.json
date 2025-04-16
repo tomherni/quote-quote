@@ -1,6 +1,6 @@
 {
   "name": "quote-quote",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0",
   "description": "Converts straight quotes to curly quotes — also known as smart quotes.",
   "author": "Tom Herni",
   "license": "MIT",

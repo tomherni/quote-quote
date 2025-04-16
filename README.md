@@ -5,8 +5,8 @@ Convert boring, straight quotes (" and ') to beautiful, typographically correct 
 ## Highlights
 
 - Converts straight single/double quotes to curly quotes.
-- Converts straight quotes used as primes to prime symbols.
 - Handles contractions, possessives and abbreviated years.
+- Converts straight quotes used as primes to prime symbols.
 - Lightweight, zero dependencies, modern, and tree-shakeable.
 
 ## Installing
