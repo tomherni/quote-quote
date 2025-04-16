@@ -1,6 +1,26 @@
 import { describe, expect, test } from '@jest/globals';
 import { convert } from '../src/convert';
 
+describe('API', () => {
+  test.each([undefined, null, false, 0, true, 1, [], {}])(
+    'throws an error when its argument is %s',
+    (argument) => {
+      expect(() => convert(argument as string)).toThrow(
+        'quote-quote: "convert()" argument must be a string',
+      );
+    },
+  );
+
+  test('does not throw an error when its argument is an empty string', () => {
+    expect(() => convert('')).not.toThrowError();
+  });
+
+  test('returns a string', () => {
+    expect(convert('')).toEqual('');
+    expect(convert('foo')).toEqual('foo');
+  });
+});
+
 describe('Basic scenarios', () => {
   describe('Single quotes', () => {
     test.each([
