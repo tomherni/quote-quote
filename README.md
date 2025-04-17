@@ -39,6 +39,30 @@ const text = `"That's a 'magic' shoe."`;
 convert(text); // “That’s a ‘magic’ shoe.”
 ```
 
+## API
+
+Note: API examples use ESM, but CommonJS is also supported.
+
+### convert(text)
+
+Converts straight quotes to curly quotes and primes.
+
+|         |                                                        |
+| ------- | ------------------------------------------------------ |
+| `text`  | `String` – the text that may contain quotes to convert |
+| Returns | `String`                                               |
+| Throws  | `TypeError` – if `text` is not of type `String`        |
+
+Example:
+
+```js
+import { convert } from 'quote-quote';
+
+const text = `"That's a 'magic' shoe."`;
+
+convert(text); // “That’s a ‘magic’ shoe.”
+```
+
 ## Versioning
 
 This project follows [SemVer](https://semver.org/) (Semantic Versioning).
