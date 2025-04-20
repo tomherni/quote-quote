@@ -1,29 +1,30 @@
-import { describe, expect, test } from '@jest/globals';
-import { convert } from '../src/convert';
+import * as assert from 'node:assert/strict';
+import { describe, test } from 'node:test';
+import { convert } from '../convert.js';
 
 describe('API', () => {
-  test.each([undefined, null, false, 0, true, 1, [], {}])(
-    'throws an error when its argument is %s',
-    (argument) => {
-      expect(() => convert(argument as string)).toThrow(
-        'quote-quote: "convert()" argument must be a string',
-      );
-    },
-  );
+  for (const value of [undefined, null, false, 0, true, 1, [], {}]) {
+    test(`throws a TypeError when its argument is ${value}`, () => {
+      assert.throws(() => convert(value as string), {
+        name: 'TypeError',
+        message: 'quote-quote: "convert()" argument must be a string',
+      });
+    });
+  }
 
-  test('does not throw an error when its argument is an empty string', () => {
-    expect(() => convert('')).not.toThrowError();
+  test('does not throw when its argument is an empty string', () => {
+    assert.doesNotThrow(() => convert(''));
   });
 
   test('returns a string', () => {
-    expect(convert('')).toEqual('');
-    expect(convert('foo')).toEqual('foo');
+    assert.equal(typeof convert(''), 'string');
+    assert.equal(typeof convert('foo'), 'string');
   });
 });
 
 describe('Basic scenarios', () => {
   describe('Single quotes', () => {
-    test.each([
+    const scenarios = [
       [`'Foo'`, `‘Foo’`],
       [`'Foo.'`, `‘Foo.’`],
       [`'Foo'.`, `‘Foo’.`],
@@ -41,13 +42,17 @@ describe('Basic scenarios', () => {
       [`'1'`, `‘1’`],
       // [`'12'`, `‘12’`],
       [`Foo '1' bar`, `Foo ‘1’ bar`],
-    ])('Converts: %s', (text, expected) => {
-      expect(convert(text)).toEqual(expected);
-    });
+    ];
+
+    for (const [text, expected] of scenarios) {
+      test(`Converts: ${text}`, () => {
+        assert.equal(convert(text), expected);
+      });
+    }
   });
 
   describe('Double quotes', () => {
-    test.each([
+    const scenarios = [
       [`"Foo"`, `“Foo”`],
       [`"Foo."`, `“Foo.”`],
       [`"Foo".`, `“Foo”.`],
@@ -65,13 +70,17 @@ describe('Basic scenarios', () => {
       [`"1"`, `“1”`],
       [`"12"`, `“12”`],
       [`Foo "1" bar`, `Foo “1” bar`],
-    ])('Converts: %s', (text, expected) => {
-      expect(convert(text)).toEqual(expected);
-    });
+    ];
+
+    for (const [text, expected] of scenarios) {
+      test('Converts: %s', () => {
+        assert.equal(convert(text), expected);
+      });
+    }
   });
 
   describe('Contractions and possessives', () => {
-    test.each([
+    const scenarios = [
       [`Foo's`, `Foo’s`],
       [`Foo't`, `Foo’t`],
       [`Foo's bar't`, `Foo’s bar’t`],
@@ -80,24 +89,32 @@ describe('Basic scenarios', () => {
       [`Foo 1's bar 23's`, `Foo 1’s bar 23’s`],
       [`Foo 'ba'r`, `Foo ’ba’r`],
       [`'Foo`, `’Foo`],
-    ])('Converts: %s', (text, expected) => {
-      expect(convert(text)).toEqual(expected);
-    });
+    ];
+
+    for (const [text, expected] of scenarios) {
+      test(`Converts: ${text}`, () => {
+        assert.equal(convert(text), expected);
+      });
+    }
   });
 
   describe('Abbreviated years', () => {
-    test.each([
+    const scenarios = [
       [`'90`, `’90`],
       [`'00`, `’00`],
       [`Foo '90`, `Foo ’90`],
       [`Foo '90 bar`, `Foo ’90 bar`],
-    ])('Converts: %s', (text, expected) => {
-      expect(convert(text)).toEqual(expected);
-    });
+    ];
+
+    for (const [text, expected] of scenarios) {
+      test(`Converts: ${text}`, () => {
+        assert.equal(convert(text), expected);
+      });
+    }
   });
 
   describe('Primes', () => {
-    test.each([
+    const scenarios = [
       [`''''`, `⁗`],
       [`'''`, `‴`],
       [`''`, `″`],
@@ -105,15 +122,19 @@ describe('Basic scenarios', () => {
       [`Foo 6'1" bar`, `Foo 6′1″ bar`],
       [`Foo bar''' baz`, `Foo bar‴ baz`],
       [`Foo bar'''' baz`, `Foo bar⁗ baz`],
-    ])('Converts: %s', (text, expected) => {
-      expect(convert(text)).toEqual(expected);
-    });
+    ];
+
+    for (const [text, expected] of scenarios) {
+      test(`Converts: ${text}`, () => {
+        assert.equal(convert(text), expected);
+      });
+    }
   });
 });
 
 describe('Nested quotes', () => {
   describe('Quotes within single quotes', () => {
-    test.each([
+    const scenarios = [
       [`'"Foo"'`, `‘“Foo”’`],
       [`'Foo 'bar' baz'`, `‘Foo ‘bar’ baz’`],
       [`'Foo ba'r baz'`, `‘Foo ba’r baz’`],
@@ -123,13 +144,17 @@ describe('Nested quotes', () => {
       [`'Foo 'bar '90 baz' qux'`, `‘Foo ‘bar ’90 baz’ qux’`],
       [`'Foo 6'1" bar'`, `‘Foo 6′1″ bar’`],
       [`'Foo bar''' baz'`, `‘Foo bar‴ baz’`],
-    ])('Converts: %s', (text, expected) => {
-      expect(convert(text)).toEqual(expected);
-    });
+    ];
+
+    for (const [text, expected] of scenarios) {
+      test(`Converts: ${text}`, () => {
+        assert.equal(convert(text), expected);
+      });
+    }
   });
 
   describe('Quotes within double quotes', () => {
-    test.each([
+    const scenarios = [
       [`"'Foo'"`, `“‘Foo’”`],
       [`"Foo "bar" baz"`, `“Foo “bar” baz”`],
       [`"Foo ba'r baz"`, `“Foo ba’r baz”`],
@@ -139,25 +164,33 @@ describe('Nested quotes', () => {
       [`"Foo 'bar '90 baz' qux"`, `“Foo ‘bar ’90 baz’ qux”`],
       [`"Foo 6'1" bar"`, `“Foo 6′1″ bar”`],
       [`"Foo bar''' baz"`, `“Foo bar‴ baz”`],
-    ])('Converts: %s', (text, expected) => {
-      expect(convert(text)).toEqual(expected);
-    });
+    ];
+
+    for (const [text, expected] of scenarios) {
+      test(`Converts: ${text}`, () => {
+        assert.equal(convert(text), expected);
+      });
+    }
   });
 
   describe('TODO', () => {
-    test.each([
+    const scenarios = [
       [
         `"Foo 'bar' '90s baz's 'qux 6'1"'"`,
         `“Foo ‘bar’ ’90s baz’s ‘qux 6′1″’”`,
       ],
-    ])('Converts: %s', (text, expected) => {
-      expect(convert(text)).toEqual(expected);
-    });
+    ];
+
+    for (const [text, expected] of scenarios) {
+      test(`Converts: ${text}`, () => {
+        assert.equal(convert(text), expected);
+      });
+    }
   });
 });
 
 describe('Special characters', () => {
-  test.each([
+  const scenarios = [
     // Inverted question/exclamation marks
     [`'¡Foo!'`, `‘¡Foo!’`],
     [`"¡Foo!"`, `“¡Foo!”`],
@@ -193,13 +226,17 @@ describe('Special characters', () => {
     [`"_"`, `“_”`],
     [`Foo '-' bar`, `Foo ‘-’ bar`],
     // [`Foo "-" bar`, `Foo “-” bar`],
-  ])('Converts: %s', (text, expected) => {
-    expect(convert(text)).toEqual(expected);
-  });
+  ];
+
+  for (const [text, expected] of scenarios) {
+    test(`Converts: ${text}`, () => {
+      assert.equal(convert(text), expected);
+    });
+  }
 });
 
 describe('Small sentences', () => {
-  test.each([
+  const scenarios = [
     [`Y'all're goin' to love it!`, `Y’all’re goin’ to love it!`],
     [`Don't stop believin'.`, `Don’t stop believin’.`],
     [`"That's a 'magic' shoe."`, `“That’s a ‘magic’ shoe.”`],
@@ -250,9 +287,13 @@ describe('Small sentences', () => {
     //   `"Newsflash": "It must have been '10–15' degrees yesterday."`,
     //   `“Newsflash”: “It must have been ‘10–15’ degrees yesterday.”`,
     // ],
-  ])('Converts: %s', (text, expected) => {
-    expect(convert(text)).toEqual(expected);
-  });
+  ];
+
+  for (const [text, expected] of scenarios) {
+    test(`Converts: ${text}`, () => {
+      assert.equal(convert(text), expected);
+    });
+  }
 });
 
 describe('Excerpts', () => {
@@ -287,7 +328,7 @@ describe('Excerpts', () => {
       “Oho-o! I think I see. You want to SELL all your property to me—not give it. That’s the correct idea.”
     `;
 
-    expect(convert(text)).toEqual(expected);
+    assert.equal(convert(text), expected);
   });
 
   test('Pride and Prejudice, by Jane Austen', () => {
@@ -317,6 +358,6 @@ describe('Excerpts', () => {
       “To-morrow fortnight.”
     `;
 
-    expect(convert(text)).toEqual(expected);
+    assert.equal(convert(text), expected);
   });
 });
