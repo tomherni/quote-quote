@@ -39,6 +39,13 @@ const text = `"That's a 'magic' shoe."`;
 convert(text); // “That’s a ‘magic’ shoe.”
 ```
 
+## API Summary
+
+|                     |                                                      |
+| ------------------- | ---------------------------------------------------- |
+| `convert()`         | Convert straight quotes to curly quotes.             |
+| `convertMarkdown()` | Convert straight quotes to curly quotes in Markdown. |
+
 ## API
 
 ### convert(text)
@@ -57,6 +64,24 @@ import { convert } from 'quote-quote';
 const text = `"That's a 'magic' shoe."`;
 
 convert(text); // “That’s a ‘magic’ shoe.”
+```
+
+### convertMarkdown(text)
+
+Convert straight quotes to curly quotes in text formatted as Markdown. This means that quotes inside code are not converted.
+
+|         |                                                      |
+| ------- | ---------------------------------------------------- |
+| `text`  | `String` – the text that may contain straight quotes |
+| Returns | `String`                                             |
+| Throws  | `TypeError` – if `text` is not a `String`            |
+
+```js
+import { convertMarkdown } from 'quote-quote';
+
+const text = '"Hello `"world"` they said.';
+
+convertMarkdown(text); // “Hello `"world"`” they said.
 ```
 
 ## Versioning
