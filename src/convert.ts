@@ -1,10 +1,14 @@
 /**
- * Converts straight quotes to typographically correct curly quotes and primes.
+ * Convert straight quotes to curly quotes.
  *
  * This includes:
  * - Straight single/double quotes to left/right quotation marks,
- * - Contractions and possessives like "don't", "it's", or "John's",
  * - Straight quotes used as primes to proper prime symbols.
+ * - Contractions and possessives like "don't", "it's", or "John's",
+ *
+ * @param {string} text - the text that may contain straight quotes
+ * @return {string}
+ * @throws {TypeError} if `text` is not a `String`
  *
  * @example
  * convert(`"That's a 'magic' shoe."`); // “That’s a ‘magic’ shoe.”

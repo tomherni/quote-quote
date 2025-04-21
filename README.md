@@ -5,8 +5,8 @@ Convert boring, straight quotes (" and ') to beautiful, typographically correct 
 ## Highlights
 
 - Converts straight single/double quotes to curly quotes.
-- Handles contractions, possessives and abbreviated years.
 - Converts straight quotes used as primes to prime symbols.
+- Handles contractions, possessives and abbreviated years.
 - Lightweight, zero dependencies, modern, and tree-shakeable.
 
 ## Installing
@@ -41,19 +41,15 @@ convert(text); // “That’s a ‘magic’ shoe.”
 
 ## API
 
-Note: API examples use ESM, but CommonJS is also supported.
-
 ### convert(text)
 
-Converts straight quotes to curly quotes and primes.
+Convert straight quotes to curly quotes.
 
-|         |                                                        |
-| ------- | ------------------------------------------------------ |
-| `text`  | `String` – the text that may contain quotes to convert |
-| Returns | `String`                                               |
-| Throws  | `TypeError` – if `text` is not of type `String`        |
-
-Example:
+|         |                                                      |
+| ------- | ---------------------------------------------------- |
+| `text`  | `String` – the text that may contain straight quotes |
+| Returns | `String`                                             |
+| Throws  | `TypeError` – if `text` is not a `String`            |
 
 ```js
 import { convert } from 'quote-quote';
