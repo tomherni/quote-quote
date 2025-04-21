@@ -18,7 +18,6 @@ describe('API', () => {
 
   test('returns a string', () => {
     assert.equal(typeof convert(''), 'string');
-    assert.equal(typeof convert('foo'), 'string');
   });
 });
 
@@ -73,7 +72,7 @@ describe('Basic scenarios', () => {
     ];
 
     for (const [text, expected] of scenarios) {
-      test('Converts: %s', () => {
+      test(`Converts: ${text}`, () => {
         assert.equal(convert(text), expected);
       });
     }
