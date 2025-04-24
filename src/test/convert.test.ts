@@ -1,23 +1,51 @@
+import type { ConvertOptions } from '../types';
 import * as assert from 'node:assert/strict';
 import { describe, test } from 'node:test';
 import { convert } from '../convert.js';
 
 describe('API', () => {
-  for (const value of [undefined, null, false, 0, true, 1, [], {}]) {
-    test(`throws a TypeError when its argument is ${value}`, () => {
-      assert.throws(() => convert(value as string), {
-        name: 'TypeError',
-        message: 'quote-quote: "convert()" argument must be a string',
+  describe('argument: "text"', () => {
+    for (const value of [undefined, null, false, 0, true, 1, [], {}]) {
+      test(`throws a TypeError when argument is ${value}`, () => {
+        assert.throws(() => convert(value as string), {
+          name: 'TypeError',
+          message: 'quote-quote: "text" argument must be a string',
+        });
       });
-    });
-  }
+    }
 
-  test('does not throw when its argument is an empty string', () => {
-    assert.doesNotThrow(() => convert(''));
+    test('does not throw when argument is an empty string', () => {
+      assert.doesNotThrow(() => convert(''));
+    });
   });
 
-  test('returns a string', () => {
-    assert.equal(typeof convert(''), 'string');
+  describe('argument: "options"', () => {
+    for (const value of [false, 0, true, 1, '', 'foo', []]) {
+      test(`throws a TypeError when argument is ${value}`, () => {
+        assert.throws(() => convert('', value as unknown as ConvertOptions), {
+          name: 'TypeError',
+          message: 'quote-quote: "options" argument must be an object',
+        });
+      });
+    }
+
+    for (const value of [undefined, null]) {
+      test(`does not throw when argument is ${value}`, () => {
+        assert.doesNotThrow(() =>
+          convert('', value as unknown as ConvertOptions),
+        );
+      });
+    }
+
+    test(`does not throw when argument is omitted`, () => {
+      assert.doesNotThrow(() => convert(''));
+    });
+  });
+
+  describe('return value', () => {
+    test('returns a string', () => {
+      assert.equal(typeof convert(''), 'string');
+    });
   });
 });
 

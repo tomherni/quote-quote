@@ -48,15 +48,19 @@ convert(text); // “That’s a ‘magic’ shoe.”
 
 ## API
 
-### convert(text)
+### convert(text[, options])
 
 Convert straight quotes to curly quotes.
 
-|         |                                                      |
-| ------- | ---------------------------------------------------- |
-| `text`  | `String` – the text that may contain straight quotes |
-| Returns | `String`                                             |
-| Throws  | `TypeError` – if `text` is not a `String`            |
+|                      |                                                                        |
+| -------------------- | ---------------------------------------------------------------------- |
+| `text`               | `String` – the text that may contain straight quotes                   |
+| [`options`]          | `Object` – optional options                                            |
+| [`options.ellipsis`] | `Boolean` – whether to also convert "..." to an ellipsis               |
+| Returns              | `String`                                                               |
+| Throws               | `TypeError` – if `text` is not a `String` or `options` not an `Object` |
+
+Example:
 
 ```js
 import { convert } from 'quote-quote';
@@ -66,22 +70,46 @@ const text = `"That's a 'magic' shoe."`;
 convert(text); // “That’s a ‘magic’ shoe.”
 ```
 
-### convertMarkdown(text)
+Example using `options`:
+
+```js
+import { convert } from 'quote-quote';
+
+const text = `"That's a 'magic' shoe..."`;
+
+convert(text, { ellipsis: true }); // “That’s a ‘magic’ shoe…”
+```
+
+### convertMarkdown(text[, options])
 
 Convert straight quotes to curly quotes in text formatted as Markdown. This means that quotes inside code are not converted.
 
-|         |                                                      |
-| ------- | ---------------------------------------------------- |
-| `text`  | `String` – the text that may contain straight quotes |
-| Returns | `String`                                             |
-| Throws  | `TypeError` – if `text` is not a `String`            |
+|                      |                                                                        |
+| -------------------- | ---------------------------------------------------------------------- |
+| `text`               | `String` – the text that may contain straight quotes                   |
+| [`options`]          | `Object` – optional options                                            |
+| [`options.ellipsis`] | `Boolean` – whether to also convert "..." to an ellipsis               |
+| Returns              | `String`                                                               |
+| Throws               | `TypeError` – if `text` is not a `String` or `options` not an `Object` |
+
+Example:
 
 ```js
 import { convertMarkdown } from 'quote-quote';
 
-const text = '"Hello `"world"` they said.';
+const text = '"Hello `"world"`" they said.';
 
 convertMarkdown(text); // “Hello `"world"`” they said.
+```
+
+Example using `options`:
+
+```js
+import { convertMarkdown } from 'quote-quote';
+
+const text = '"Hello `"world"`" they said...';
+
+convertMarkdown(text, { ellipsis: true }); // “Hello `"world"`” they said…
 ```
 
 ## Versioning

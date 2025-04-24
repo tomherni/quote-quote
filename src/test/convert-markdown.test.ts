@@ -1,23 +1,54 @@
+import type { ConvertMarkdownOptions } from '../types';
 import * as assert from 'node:assert/strict';
 import { describe, test } from 'node:test';
 import { convertMarkdown } from '../convert-markdown.js';
 
 describe('API', () => {
-  for (const value of [undefined, null, false, 0, true, 1, [], {}]) {
-    test(`throws a TypeError when its argument is ${value}`, () => {
-      assert.throws(() => convertMarkdown(value as string), {
-        name: 'TypeError',
-        message: 'quote-quote: "convertMarkdown()" argument must be a string',
+  describe('argument: "text"', () => {
+    for (const value of [undefined, null, false, 0, true, 1, [], {}]) {
+      test(`throws a TypeError when argument is ${value}`, () => {
+        assert.throws(() => convertMarkdown(value as string), {
+          name: 'TypeError',
+          message: 'quote-quote: "text" argument must be a string',
+        });
       });
-    });
-  }
+    }
 
-  test('does not throw when its argument is an empty string', () => {
-    assert.doesNotThrow(() => convertMarkdown(''));
+    test('does not throw when argument is an empty string', () => {
+      assert.doesNotThrow(() => convertMarkdown(''));
+    });
   });
 
-  test('returns a string', () => {
-    assert.equal(typeof convertMarkdown(''), 'string');
+  describe('argument: "options"', () => {
+    for (const value of [false, 0, true, 1, '', 'foo', []]) {
+      test(`throws a TypeError when argument is ${value}`, () => {
+        assert.throws(
+          () => convertMarkdown('', value as unknown as ConvertMarkdownOptions),
+          {
+            name: 'TypeError',
+            message: 'quote-quote: "options" argument must be an object',
+          },
+        );
+      });
+    }
+
+    for (const value of [undefined, null]) {
+      test(`does not throw when argument is ${value}`, () => {
+        assert.doesNotThrow(() =>
+          convertMarkdown('', value as unknown as ConvertMarkdownOptions),
+        );
+      });
+    }
+
+    test(`does not throw when argument is omitted`, () => {
+      assert.doesNotThrow(() => convertMarkdown(''));
+    });
+  });
+
+  describe('return value', () => {
+    test('returns a string', () => {
+      assert.equal(typeof convertMarkdown(''), 'string');
+    });
   });
 });
 
