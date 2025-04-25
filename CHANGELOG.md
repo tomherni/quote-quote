@@ -1,3 +1,7 @@
+## [1.2.0](https://github.com/tomherni/quote-quote/compare/v1.1.0...v1.2.0) (2025-04-25)
+
+- feat: add options to also convert "..." to ellipsis (#7) ([cd964a86](https://github.com/tomherni/quote-quote/commit/cd964a86)), closes [#7](https://github.com/tomherni/quote-quote/pull/7)
+
 ## [1.1.0](https://github.com/tomherni/quote-quote/compare/v1.0.1...v1.1.0) (2025-04-21)
 
 - feat: add convertMarkdown() to convert quotes in Markdown text (#6) ([a8926580](https://github.com/tomherni/quote-quote/commit/a8926580)), closes [#6](https://github.com/tomherni/quote-quote/pull/6)
