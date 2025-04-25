@@ -32,7 +32,7 @@ describe('API', () => {
       });
     }
 
-    for (const value of [undefined, null]) {
+    for (const value of [undefined, null, {}]) {
       test(`does not throw when argument is ${value}`, () => {
         assert.doesNotThrow(() =>
           convertMarkdown('', value as unknown as ConvertMarkdownOptions),
@@ -221,5 +221,33 @@ xx "xx" xx
 “Xx.”`;
 
     assert.equal(convertMarkdown(text), expected);
+  });
+});
+
+describe('ellipsis', () => {
+  test('does not convert "..." to an ellipsis by default', () => {
+    assert.equal(convertMarkdown('"xx..."'), '“xx...”');
+  });
+
+  test('does not convert "..." to an ellipsis when configured not to do so', () => {
+    [false, undefined, null].forEach((ellipsis) => {
+      assert.equal(
+        convertMarkdown('"xx..."', {
+          ellipsis,
+        } as unknown as ConvertMarkdownOptions),
+        '“xx...”',
+      );
+    });
+  });
+
+  test('converts "..." to an ellipsis when configured', () => {
+    assert.equal(convertMarkdown('"xx..."', { ellipsis: true }), '“xx…”');
+  });
+
+  test('does not convert "..." to an ellipsis in markdown', () => {
+    assert.equal(
+      convertMarkdown('xx `...` xx', { ellipsis: true }),
+      'xx `...` xx',
+    );
   });
 });

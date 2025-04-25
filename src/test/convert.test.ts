@@ -29,7 +29,7 @@ describe('API', () => {
       });
     }
 
-    for (const value of [undefined, null]) {
+    for (const value of [undefined, null, {}]) {
       test(`does not throw when argument is ${value}`, () => {
         assert.doesNotThrow(() =>
           convert('', value as unknown as ConvertOptions),
@@ -386,5 +386,26 @@ describe('Excerpts', () => {
     `;
 
     assert.equal(convert(text), expected);
+  });
+});
+
+describe('ellipsis', () => {
+  test('does not convert "..." to an ellipsis by default', () => {
+    assert.equal(convert('"xx..."'), '“xx...”');
+  });
+
+  test('does not convert "..." to an ellipsis when configured not to do so', () => {
+    [false, undefined, null].forEach((ellipsis) => {
+      assert.equal(
+        convert('"xx..."', {
+          ellipsis,
+        } as unknown as ConvertOptions),
+        '“xx...”',
+      );
+    });
+  });
+
+  test('converts "..." to an ellipsis when configured', () => {
+    assert.equal(convert('"xx..."', { ellipsis: true }), '“xx…”');
   });
 });
