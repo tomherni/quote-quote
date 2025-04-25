@@ -1,4 +1,6 @@
+import type { ConvertMarkdownOptions } from './types.js';
 import { convert } from './convert.js';
+import { throwForInvalidArgumentTypes } from './utils.js';
 
 type PlaceholderConfig = { regex: RegExp; token: string; code: string[] };
 
@@ -20,20 +22,19 @@ const codeTripleRegex = /(?<!\\)```([\s\S]*?)(?<!\\)```/g;
  * - Contractions and possessives like "don't", "it's", or "John's",
  *
  * @param {string} text - the text that may contain straight quotes
+ * @param {Object} [options]
+ * @param {boolean} [options.ellipsis] - whether to also convert "..." to an ellipsis
  * @return {string}
  * @throws {TypeError} if `text` is not a `String`
  *
  * @example
  * convert('"Hello `"world"`" they said.'); // “Hello `"world"`” they said.
  */
-export function convertMarkdown(text: string): string {
-  // If a string was not provided then it should also not be returned, nor
-  // should the function fail silently.
-  if (typeof text !== 'string') {
-    throw new TypeError(
-      'quote-quote: "convertMarkdown()" argument must be a string',
-    );
-  }
+export function convertMarkdown(
+  text: string,
+  options?: ConvertMarkdownOptions,
+): string {
+  throwForInvalidArgumentTypes(text, options);
 
   // The order matters. For efficiency, we want to replace as few matches as
   // possible, which means to start with possibly the lengthiest matches to
@@ -57,7 +58,7 @@ export function convertMarkdown(text: string): string {
   }, text);
 
   // Convert quotes in the Markdown text that is now without code.
-  const convertedTextWithoutCode = convert(textWithoutCode);
+  const convertedTextWithoutCode = convert(textWithoutCode, options);
 
   // Put back the Markdown code in the text by replacing the placeholders.
   const convertedTextWithCode = [...placeholderConfigs]
