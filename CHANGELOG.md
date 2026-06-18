@@ -1,3 +1,9 @@
+# Changelog
+
+## [1.3.0](https://github.com/tomherni/quote-quote/compare/v1.2.0...v1.3.0) (2026-06-18)
+
+- feat: add export for the package.json (#11) ([c198ef0](https://github.com/tomherni/quote-quote/commit/c198ef0)), closes [#11](https://github.com/tomherni/quote-quote/pull/11)
+
 ## [1.2.0](https://github.com/tomherni/quote-quote/compare/v1.1.0...v1.2.0) (2025-04-25)
 
 - feat: add options to also convert "..." to ellipsis (#7) ([cd964a86](https://github.com/tomherni/quote-quote/commit/cd964a86)), closes [#7](https://github.com/tomherni/quote-quote/pull/7)
