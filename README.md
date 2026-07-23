@@ -115,3 +115,15 @@ convertMarkdown(text, { ellipsis: true }); // “Hello `"world"`” they said…
 ## Versioning
 
 This project follows [SemVer](https://semver.org/) (Semantic Versioning).
+
+## Support
+
+QuoteQuote ships ES2022 syntax. Supported environments:
+
+- Chrome 85
+- Firefox 78
+- Edge 85
+- Safari 16.4
+- iOS 16.4
+- Node.js 15
+- Deno 1.2
