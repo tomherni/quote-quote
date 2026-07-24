@@ -1,7 +1,17 @@
 {
-  "extends": "./tsconfig.esm.json",
   "compilerOptions": {
+    "strict": true,
+    "target": "ES2022",
     "moduleResolution": "Node",
-    "esModuleInterop": true
-  }
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "declaration": false,
+    "removeComments": false,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "types": ["node"]
+  },
+  "include": ["src/**/*"]
 }
