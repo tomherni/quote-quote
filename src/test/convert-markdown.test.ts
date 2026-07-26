@@ -1,4 +1,4 @@
-import type { ConvertMarkdownOptions } from '../types';
+import type { ConvertMarkdownOptions } from '../types.js';
 import * as assert from 'node:assert/strict';
 import { describe, test } from 'node:test';
 import { convertMarkdown } from '../convert-markdown.js';

@@ -7,6 +7,7 @@
   "type": "module",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
+  "browser": "./dist/quote-quote.min.js",
   "engines": {
     "node": ">=16.0.0"
   },
@@ -15,12 +16,16 @@
       "import": "./dist/esm/index.js",
       "require": "./dist/cjs/index.js"
     },
+    "./dist/quote-quote.min.js": "./dist/quote-quote.min.js",
+    "./dist/quote-quote.esm.min.js": "./dist/quote-quote.esm.min.js",
     "./package.json": "./package.json"
   },
   "files": [
     "dist",
     "!dist/**/test"
   ],
+  "unpkg": "./dist/quote-quote.min.js",
+  "jsdelivr": "./dist/quote-quote.min.js",
   "sideEffects": false,
   "scripts": {
     "build": "./scripts/build.sh",
@@ -39,6 +44,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^17.0.7",
     "prettier": "^3.8.4",
+    "rolldown": "^1.2.0",
     "terser": "^5.48.0",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.61.0"

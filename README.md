@@ -39,6 +39,27 @@ const text = `"That's a 'magic' shoe."`;
 convert(text); // “That’s a ‘magic’ shoe.”
 ```
 
+### Browser
+
+Load `quote-quote.min.js` to expose the library globally as `QuoteQuote`. It can be loaded from a CDN such as jsDelivr or UNPKG.
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/quote-quote@1/dist/quote-quote.min.js"></script>
+<script>
+  QuoteQuote.convert(`"That's a 'magic' shoe."`);
+</script>
+```
+
+Or load `quote-quote.esm.min.js` to use the library as an ES module, but without requiring a bundler.
+
+```html
+<script type="module">
+  import { convert } from 'https://cdn.jsdelivr.net/npm/quote-quote@1/dist/quote-quote.esm.min.js';
+
+  convert(`"That's a 'magic' shoe."`);
+</script>
+```
+
 ## API Summary
 
 |                     |                                                      |
