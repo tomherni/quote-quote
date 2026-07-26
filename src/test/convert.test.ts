@@ -1,4 +1,4 @@
-import type { ConvertOptions } from '../types';
+import type { ConvertOptions } from '../types.js';
 import * as assert from 'node:assert/strict';
 import { describe, test } from 'node:test';
 import { convert } from '../convert.js';

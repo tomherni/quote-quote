@@ -39,6 +39,27 @@ const text = `"That's a 'magic' shoe."`;
 convert(text); // “That’s a ‘magic’ shoe.”
 ```
 
+### Browser
+
+Load `quote-quote.min.js` to make the global `QuoteQuote` available. This can be done via a CDN such as jsDelivr or UNPKG.
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/quote-quote@1/dist/quote-quote.min.js"></script>
+<script>
+  QuoteQuote.convert(`"That's a 'magic' shoe."`);
+</script>
+```
+
+Or load the ESM version `quote-quote.esm.min.js`.
+
+```html
+<script type="module">
+  import { convert } from 'https://cdn.jsdelivr.net/npm/quote-quote@1/dist/quote-quote.esm.min.js';
+
+  convert(`"That's a 'magic' shoe."`);
+</script>
+```
+
 ## API Summary
 
 |                     |                                                      |
