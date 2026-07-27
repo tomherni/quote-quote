@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.4.0](https://github.com/tomherni/quote-quote/compare/v1.3.0...v1.4.0) (2026-07-27)
+
+- feat: add browser bundle and CDN support (#15) ([92736a7](https://github.com/tomherni/quote-quote/commit/92736a7)), closes [#9](https://github.com/tomherni/quote-quote/issues/9)
+- docs: add browser and runtime support (#14) ([5edf97e](https://github.com/tomherni/quote-quote/commit/5edf97e)), closes [#8](https://github.com/tomherni/quote-quote/issues/8)
+
 ## [1.3.0](https://github.com/tomherni/quote-quote/compare/v1.2.0...v1.3.0) (2026-06-18)
 
 - feat: add export for the package.json (#11) ([c198ef0](https://github.com/tomherni/quote-quote/commit/c198ef0)), closes [#11](https://github.com/tomherni/quote-quote/pull/11)
