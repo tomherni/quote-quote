@@ -1,10 +1,9 @@
-#!/bin/bash -eu
+#!/usr/bin/env bash
 
-set -e # Exit on error.
+set -euo pipefail
 
-# Change to project root
-ROOT="$(pwd)/$(dirname "$0")/.."
-cd "$ROOT" || exit 1
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$ROOT"
 
 # Prepare the `dist` directory.
 DIST_DIR="$ROOT/dist"
@@ -15,18 +14,23 @@ mkdir -p "$DIST_DIR"
 # Regarding comments in declaration files: https://github.com/microsoft/TypeScript/issues/14619#issuecomment-1971477006
 for MODULE_TYPE in esm cjs; do
   echo "BUILD: building for ${MODULE_TYPE}"
-  NODE_DIST_DIR="$DIST_DIR/${MODULE_TYPE}"
-  tsc -p tsconfig.${MODULE_TYPE}.json --removeComments && tsc -p tsconfig.${MODULE_TYPE}.json --declaration --emitDeclarationOnly
-
-  # CJS: Add package.json with `type: commonjs`.
-  if [ "$MODULE_TYPE" = "cjs" ]; then
-    echo "{\"type\":\"commonjs\"}" > "$NODE_DIST_DIR/package.json"
-  fi
+  tsc -p "tsconfig.${MODULE_TYPE}.json" --removeComments && tsc -p "tsconfig.${MODULE_TYPE}.json" --declaration --emitDeclarationOnly
 done
+
+# Add a package.json for CJS that sets the type to `commonjs`.
+echo "{\"type\":\"commonjs\"}" > "$DIST_DIR/cjs/package.json"
 
 # Run terser for all .js files. This also updates source maps.
 echo "BUILD: running terser"
-find dist/cjs dist/esm -type f -name "*.js" -exec sh -c 'terser "$0" --mangle --compress --source-map "content=$0.map,filename=${0##*/},url=${0##*/}.map" -o "$0"' {} \;
+find dist/cjs dist/esm -type f -name "*.js" \
+  -exec sh -c '
+    file="$1"
+    terser "$file" \
+      --mangle \
+      --compress \
+      --source-map "content=$file.map,filename=${file##*/},url=${file##*/}.map" \
+      -o "$file"
+  ' sh {} \;
 
 # Generate minified browser bundles.
 echo "BUILD: building for browser"
